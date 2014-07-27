@@ -4,9 +4,8 @@
 
 package org.mckilliam.distributions.circular;
 
-//import cern.jet.math.Bessel;
+import cern.jet.math.Bessel;
 import java.util.Random;
-import static pubsim.Util.besselI;
 
 /**
  * von Mises distribution of
@@ -79,7 +78,7 @@ public class VonMises extends CircularRandomVariable{
     @Override
     public double pdf(Double x) {
         double d = kappa*Math.cos(2*Math.PI*(x - mu));
-        return Math.exp(d)/besselI(0,kappa);
+        return Math.exp(d)/Bessel.i0(kappa);
     }
     
     /** 
@@ -90,11 +89,11 @@ public class VonMises extends CircularRandomVariable{
         double sum = 0, bterm = 1, tol = 1e-12;
         int j = 1;
         while( Math.abs(bterm) > tol){
-            bterm = besselI(j, kappa) / j;
+            bterm = pubsim.Util.besselI(j, kappa) / j;
             sum+= bterm * Math.sin(2*Math.PI*(x-mu)*j);
             j++;
         }
-        return x + sum/besselI(0,kappa)/Math.PI;
+        return x + sum/Bessel.i0(kappa)/Math.PI;
     }
 
     @Override
@@ -109,8 +108,8 @@ public class VonMises extends CircularRandomVariable{
 
     @Override
     public Double circularVariance() {
-        //return 1.0 - Bessel.i1(kappa)/Bessel.i0(kappa);
-        return 1.0 - besselI(1,kappa)/besselI(0,kappa);
+        return 1.0 - Bessel.i1(kappa)/Bessel.i0(kappa);
+        //return 1.0 - pubsim.Util.besselI(1,kappa)/pubsim.Util.besselI(0,kappa);
     }
 
 }

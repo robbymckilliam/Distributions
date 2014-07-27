@@ -18,9 +18,9 @@ import static pubsim.Util.dround6;
  *
  * @author robertm
  */
-public class WrappedGaussianNoiseTest {
+public class WrappedGaussianTest {
 
-    public WrappedGaussianNoiseTest() {
+    public WrappedGaussianTest() {
     }
 
     @BeforeClass
