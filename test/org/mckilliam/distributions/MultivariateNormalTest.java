@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mckilliam.distributions;
 
 import Jama.Matrix;
@@ -11,7 +7,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import pubsim.VectorFunctions;
-import pubsim.optimisation.AutoIntegralFunction;
+import org.mckilliam.optimisation.AutoIntegralFunction;
 import static org.junit.Assert.*;
 
 /**

@@ -11,8 +11,8 @@ import flanagan.integration.Integration;
 import pubsim.Complex;
 import org.mckilliam.distributions.circular.CircularRandomVariable;
 import org.mckilliam.distributions.circular.WrappedCircularRandomVariable;
-import pubsim.optimisation.Bisection;
-import pubsim.optimisation.SingleVariateFunction;
+import org.mckilliam.optimisation.Bisection;
+import org.mckilliam.optimisation.SingleVariateFunction;
 import rngpack.RandomElement;
 import rngpack.Ranmar;
 

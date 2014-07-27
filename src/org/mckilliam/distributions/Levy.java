@@ -1,7 +1,7 @@
 package org.mckilliam.distributions;
 
-import pubsim.optimisation.Bisection;
-import pubsim.optimisation.SingleVariateFunction;
+import org.mckilliam.optimisation.Bisection;
+import org.mckilliam.optimisation.SingleVariateFunction;
 
 /**
  * Class implements a Levy distribution.  This distribution is heavy tailed and a member of

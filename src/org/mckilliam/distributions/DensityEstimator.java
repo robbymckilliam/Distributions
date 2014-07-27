@@ -1,6 +1,6 @@
 package org.mckilliam.distributions;
 
-import pubsim.optimisation.SingleVariateFunction;
+import org.mckilliam.optimisation.SingleVariateFunction;
 
 /**
  * Standard kernel density estimator based on convolution with a

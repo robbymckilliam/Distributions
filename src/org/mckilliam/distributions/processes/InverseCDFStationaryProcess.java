@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mckilliam.distributions.processes;
 
 import Jama.Matrix;
 import flanagan.integration.IntegralFunction;
 import flanagan.integration.Integration;
 import org.mckilliam.distributions.RealRandomVariable;
-import pubsim.optimisation.AutoIntegralFunction;
+import org.mckilliam.optimisation.AutoIntegralFunction;
 
 /**
  * This implements a stationary process with arbitrary pdf using a Gaussian process.  You can
