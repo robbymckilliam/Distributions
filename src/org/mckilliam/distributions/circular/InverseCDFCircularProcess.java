@@ -1,8 +1,7 @@
 package org.mckilliam.distributions.circular;
 
 import Jama.Matrix;
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import org.mckilliam.distributions.processes.InverseCDFStationaryProcess;
 import org.mckilliam.optimisation.AutoIntegralFunction;
 
@@ -31,12 +30,12 @@ public class InverseCDFCircularProcess extends InverseCDFStationaryProcess imple
         final double ir = 10*Math.sqrt(Xvar); //range to compute integral over        
         
         //compute the variance term ie. ac[0]
-        acs[0] = (new Integration(new IntegralFunction() {
-                        public double function(double x) {
+        acs[0] = (new Integration() {
+                        public double f(double x) {
                             double sFGx = Math.sin(2*Math.PI*y.icdf(g.cdf(x)));
                             return  sFGx*sFGx* X.marginal().pdf(x);
                         }
-                    }, -ir, ir)).gaussQuad(150);
+                    }).trapezoid(-ir,ir,150);
  
         //compute all teh convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
@@ -55,6 +54,7 @@ public class InverseCDFCircularProcess extends InverseCDFStationaryProcess imple
         return acs;
     }
 
+    @Override
     public CircularRandomVariable circularMarginal() {
         return crv;
     }

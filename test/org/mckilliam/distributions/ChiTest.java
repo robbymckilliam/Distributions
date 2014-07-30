@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mckilliam.distributions;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
@@ -60,44 +55,44 @@ public class ChiTest {
         System.out.println("pdf");
         Double x = null;
         final Chi instance = new Chi(5,0.4);
-        final int INTEGRAL_STEPS = 5000;
+        final int INTEGRAL_STEPS = 10000;
         
         //check mean numerically
-        double meanint = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double meanint = (new Integration() {
+                public double f(double x) {
                     return x*instance.pdf(x);
                 }
-            }, 0, 500)).gaussQuad(INTEGRAL_STEPS);
-        assertEquals(instance.mean(), meanint,0.001);
+            }).trapezoid(0, 500, INTEGRAL_STEPS);
+        assertEquals(instance.mean(), meanint,0.005);
         
         //check variance numerically
-        double varint = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double varint = (new Integration() {
+                public double f(double x) {
                     double xm = x - instance.mean();
                     return xm*xm*instance.pdf(x);
                 }
-            }, 0, 500)).gaussQuad(INTEGRAL_STEPS);
-        assertEquals(instance.variance(), varint,0.001);
+            }).trapezoid(0, 500, INTEGRAL_STEPS);
+        assertEquals(instance.variance(), varint,0.005);
         
         
         final Chi instance2 = new Chi.Chi2(0.333);
         
         //check mean numerically
-        double meanint2 = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double meanint2 = (new Integration() {
+                public double f(double x) {
                     return x*instance2.pdf(x);
                 }
-            }, 0, 500)).gaussQuad(INTEGRAL_STEPS);
-        assertEquals(instance2.mean(), meanint2,0.001);
+            }).trapezoid(0, 500, INTEGRAL_STEPS);
+        assertEquals(instance2.mean(), meanint2,0.005);
         
         //check variance numerically
-        double varint2 = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double varint2 = (new Integration() {
+                public double f(double x) {
                     double xm = x - instance2.mean();
                     return xm*xm*instance2.pdf(x);
                 }
-            }, 0, 500)).gaussQuad(INTEGRAL_STEPS);
-        assertEquals(instance2.variance(), varint2,0.001);
+            }).trapezoid(0, 500, INTEGRAL_STEPS);
+        assertEquals(instance2.variance(), varint2,0.005);
         
     }
 }

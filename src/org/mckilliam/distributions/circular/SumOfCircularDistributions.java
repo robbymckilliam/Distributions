@@ -1,7 +1,6 @@
 package org.mckilliam.distributions.circular;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
@@ -112,11 +111,11 @@ public class SumOfCircularDistributions extends CircularRandomVariable {
     public double cdf(Double x){
         double startint = mean - 100*Math.sqrt(variance);
         final int INTEGRAL_STEPS = 1000;
-        double cdfval = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double cdfval = (new Integration() {
+                public double f(double x) {
                     return pdf(x);
                 }
-            }, startint, x)).trapezium(INTEGRAL_STEPS);
+            }).trapezoid(startint, x, INTEGRAL_STEPS);
         return cdfval;
     }
 

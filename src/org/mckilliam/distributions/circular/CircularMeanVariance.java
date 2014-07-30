@@ -1,7 +1,6 @@
 package org.mckilliam.distributions.circular;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 
 /**
  * Compute the circularVariance of the argument of the complex mean estimator
@@ -18,16 +17,16 @@ public class CircularMeanVariance {
         f = dist;
 
         final int INTEGRAL_STEPS = 10000;
-        double Ecos = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        double Ecos = (new Integration() {
+            public double f(double x) {
                 return Math.cos(2*Math.PI*x)*f.pdf(x);
             }
-        }, -0.5, 0.5)).gaussQuad(INTEGRAL_STEPS);
-        double Esin = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        }).trapezoid(-0.5, 0.5, INTEGRAL_STEPS);
+        double Esin = (new Integration() {
+            public double f(double x) {
                 return Math.sin(2*Math.PI*x)*f.pdf(x);
             }
-        }, -0.5, 0.5)).gaussQuad(INTEGRAL_STEPS);
+        }).trapezoid(-0.5, 0.5, INTEGRAL_STEPS);
 
         var = 1 - Math.sqrt( Ecos*Ecos + Esin*Esin);
         mean = Math.atan2(Esin, Ecos)/(2*Math.PI);

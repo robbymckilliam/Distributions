@@ -1,8 +1,7 @@
 package org.mckilliam.distributions.processes;
 
 import Jama.Matrix;
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import org.mckilliam.distributions.RealRandomVariable;
 import org.mckilliam.optimisation.AutoIntegralFunction;
 
@@ -40,12 +39,12 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
         final double ir = 10*Math.sqrt(Xvar); //range to compute integral over        
         
         //compute the variance term ie. ac[0]
-        ac[0] = (new Integration(new IntegralFunction() {
-                        public double function(double x) {
+        ac[0] = (new Integration() {
+                        public double f(double x) {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }, -ir, ir)).gaussQuad(150);
+                    }).trapezoid(ir, ir, 150);
  
         //compute all the convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
@@ -69,12 +68,12 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
         
         
         //compute the variance term ie. ac[0]
-        ac[0] = (new Integration(new IntegralFunction() {
-                        public double function(double x) {
+        ac[0] = (new Integration() {
+                        public double f(double x) {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }, -ir, ir)).gaussQuad(intsteps);
+                    }).trapezoid(ir, ir, 150);
  
         //compute all teh convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};

@@ -4,8 +4,7 @@
 
 package org.mckilliam.distributions.circular;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import static pubsim.Util.fracpart;
 import org.mckilliam.distributions.RealRandomVariable;
 
@@ -38,7 +37,7 @@ public class InstrinsicMeanAndVariance {
     }
 
     /**
-     * Compute the unwrapped variance assuming that the mean is truemean,
+     * Compute the unwrapped variance assuming that the mean is true mean,
      * i.e. this allows you to specify the mean ahead of time. This is much
      * faster if you do know the mean.
      */
@@ -49,14 +48,14 @@ public class InstrinsicMeanAndVariance {
 
     }
 
-    /** Compute the wrapped variance after applying a rotaton of phi */
+    /** Compute the wrapped variance after applying a rotation of phi */
     public static double computeIntrinsicVarianceAbout(final double phi, final RealRandomVariable dist, int integralsteps){
-        double tvar = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        double tvar = (new Integration() {
+            public double f(double x) {
                 double rot = fracpart(x-phi);
                 return rot*rot*dist.pdf(x);
             }
-        }, -0.5, 0.5)).gaussQuad(integralsteps);
+        }).trapezoid(-0.5, 0.5,integralsteps);
         return tvar;
     }
 
@@ -77,12 +76,12 @@ public class InstrinsicMeanAndVariance {
         for(double t = -0.5; t < 0.5; t += 1.0/numsamples){
             final double ft = t;
             final int INTEGRAL_STEPS = 1000;
-            double tvar = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+            double tvar = (new Integration() {
+                public double f(double x) {
                     double rot = fracpart(x-ft);
                     return rot*rot*dist.pdf(x);
                 }
-            }, -0.5, 0.5)).trapezium(INTEGRAL_STEPS);
+            }).trapezoid(-0.5, 0.5, INTEGRAL_STEPS);
             System.out.println(ft + "\t" + tvar);
         }
     }

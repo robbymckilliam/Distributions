@@ -6,13 +6,12 @@
 
 package org.mckilliam.distributions;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
 import pubsim.Complex;
 import org.mckilliam.distributions.circular.CircularRandomVariable;
 import org.mckilliam.distributions.circular.WrappedCircularRandomVariable;
 import org.mckilliam.optimisation.Bisection;
 import org.mckilliam.optimisation.SingleVariateFunction;
+import pubsim.Integration;
 import rngpack.RandomElement;
 import rngpack.Ranmar;
 
@@ -45,12 +44,12 @@ public abstract class AbstractRealRandomVariable
     public double cdf(Double x){
         double startint = mean() - 20*Math.sqrt(variance());
         final int INTEGRAL_STEPS = 1000;
-        double cdfval = (new Integration(new IntegralFunction() {
-                public double function(double x) {
-                    return pdf(x);
-                }
-            }, startint, x)).gaussQuad(INTEGRAL_STEPS);
-        return cdfval;
+        Integration integral = new Integration() {
+            public double f(double x) {
+                return pdf(x);
+            }
+        };  
+        return integral.trapezoid(startint, x,INTEGRAL_STEPS);
     }
 
     /**
@@ -103,17 +102,16 @@ public abstract class AbstractRealRandomVariable
         int integralsteps = 5000;
         double startint = mean() - 30*Math.sqrt(variance());
         double endint = mean() + 30*Math.sqrt(variance());
-        double rvar = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        double rvar = (new Integration() {
+            public double f(double x) {
                 return Math.cos(ft*x)*pdf(x);
             }
-        }, startint, endint)).gaussQuad(integralsteps);
-        double cvar = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        }).trapezoid(startint, endint,integralsteps);
+        double cvar = (new Integration() {
+            public double f(double x) {
                 return Math.sin(ft*x)*pdf(x);
             }
-        }, startint, endint)).gaussQuad(integralsteps);
-        
+        }).trapezoid(startint, endint,integralsteps);
         return new Complex(rvar, cvar);
     }
 

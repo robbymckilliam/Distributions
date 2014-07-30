@@ -4,8 +4,7 @@
 
 package org.mckilliam.distributions.circular;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
+import pubsim.Integration;
 import pubsim.Complex;
 import org.mckilliam.distributions.RealRandomVariable;
 import org.mckilliam.distributions.SeedGenerator;
@@ -131,11 +130,11 @@ public abstract class CircularRandomVariable implements RealRandomVariable {
     public double cdf(Double x){
         double startint = -0.5;
         final int INTEGRAL_STEPS = 1000;
-        double cdfval = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double cdfval = (new Integration() {
+                public double f(double x) {
                     return pdf(x);
                 }
-            }, startint, x)).trapezium(INTEGRAL_STEPS);
+            }).trapezoid(startint,x,INTEGRAL_STEPS);
         return cdfval;
     }
 
@@ -147,11 +146,11 @@ public abstract class CircularRandomVariable implements RealRandomVariable {
     @Override
     public Double mean(){
         final int INTEGRAL_STEPS = 1000;
-        double tmean = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double tmean = (new Integration() {
+                public double f(double x) {
                     return x*pdf(x);
                 }
-            }, -0.5, 0.5)).trapezium(INTEGRAL_STEPS);
+            }).trapezoid(-0.5,0.5,INTEGRAL_STEPS);
         return tmean;
     }
 
@@ -163,11 +162,11 @@ public abstract class CircularRandomVariable implements RealRandomVariable {
     @Override
     public Double variance(){
         final int INTEGRAL_STEPS = 1000;
-        double tvar = (new Integration(new IntegralFunction() {
-                public double function(double x) {
+        double tvar = (new Integration() {
+                public double f(double x) {
                     return x*x*pdf(x);
                 }
-            }, -0.5, 0.5)).trapezium(INTEGRAL_STEPS);
+            }).trapezoid(-0.5, 0.5, INTEGRAL_STEPS);
             double tmean = mean();
         return tvar - tmean*tmean;
     }
@@ -183,16 +182,16 @@ public abstract class CircularRandomVariable implements RealRandomVariable {
     @Override
     public Complex characteristicFunction(final Double t){
         int integralsteps = 5000;
-        double rvar = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        double rvar = (new Integration() {
+            public double f(double x) {
                 return Math.cos(t*x)*pdf(x);
             }
-        }, -0.5, 0.5)).gaussQuad(integralsteps);
-        double cvar = (new Integration(new IntegralFunction() {
-            public double function(double x) {
+        }).trapezoid(-0.5, 0.5, integralsteps);
+        double cvar = (new Integration() {
+            public double f(double x) {
                 return Math.sin(t*x)*pdf(x);
             }
-        }, -0.5, 0.5)).gaussQuad(integralsteps);
+        }).trapezoid(-0.5, 0.5,integralsteps);
            
         return new Complex(rvar, cvar);
     }

@@ -1,12 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.mckilliam.distributions;
 
-import flanagan.integration.IntegralFunction;
-import flanagan.integration.Integration;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
@@ -14,6 +7,7 @@ import java.util.Vector;
 import pubsim.Complex;
 import org.mckilliam.distributions.circular.CircularRandomVariable;
 import org.mckilliam.distributions.circular.WrappedCircularRandomVariable;
+import pubsim.Integration;
 
 /**
  * Distribution that is the weighted sum of others.
@@ -120,12 +114,12 @@ public class SumsOfDistributions implements RealRandomVariable {
     public double cdf(Double x){
         double startint = mean - 100*Math.sqrt(variance);
         final int INTEGRAL_STEPS = 1000;
-        double cdfval = (new Integration(new IntegralFunction() {
-                public double function(double x) {
-                    return pdf(x);
-                }
-            }, startint, x)).trapezium(INTEGRAL_STEPS);
-        return cdfval;
+        Integration integral = new Integration() {
+            public double f(double x) {
+                return pdf(x);
+            }
+        };  
+        return integral.trapezoid(startint, x,INTEGRAL_STEPS);
     }
 
     /**
