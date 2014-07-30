@@ -119,7 +119,7 @@ public class InverseCDFStationaryProcessTest {
         //check average is near the mean, i.e. zero
         assertEquals(0,VectorFunctions.mean(X), 0.3);
         
-        double[] ac = instance.autocorrelation(100);
+        double[] ac = instance.autocorrelation(500);
         System.out.println(VectorFunctions.print(ac));
         
         for(int k = 0; k < filter.length + 4; k++){
@@ -127,8 +127,8 @@ public class InverseCDFStationaryProcessTest {
             for(int i = 0; i < N-k; i++) Ak += X[i]*X[i+k];
             Ak/=(N-k);
             System.out.print(Ak + ", ");
-            if( k < ac.length) assertEquals(ac[k], Ak, 0.001);
-            else assertEquals(0, Ak, 0.001);
+            if( k < ac.length) assertEquals(ac[k], Ak, 0.01);
+            else assertEquals(0, Ak, 0.01);
         }
         
     }

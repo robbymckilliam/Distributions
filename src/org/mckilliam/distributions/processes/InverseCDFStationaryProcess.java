@@ -44,13 +44,13 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }).trapezoid(ir, ir, 150);
+                    }).trapezoid(ir, ir, 400);
  
         //compute all the convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
         for(int k = 1; k < ac.length; k++){
             final int kf = k;
-            ac[k] = new AutoIntegralFunction(150) {
+            ac[k] = new AutoIntegralFunction(400) {
                 public double value(Matrix mat) {
                     double x1 = mat.get(0,0); 
                     double xk = mat.get(1,0);
@@ -73,7 +73,7 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }).trapezoid(ir, ir, 150);
+                    }).trapezoid(ir, ir, 400);
  
         //compute all teh convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
