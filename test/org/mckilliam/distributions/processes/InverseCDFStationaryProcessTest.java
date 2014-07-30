@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.mckilliam.distributions.processes;
 
 import org.junit.After;
@@ -11,15 +7,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import pubsim.VectorFunctions;
 import static org.junit.Assert.*;
-import org.mckilliam.distributions.RealRandomVariable;
 import org.mckilliam.distributions.Uniform;
-import org.mckilliam.distributions.circular.VonMises;
 import org.mckilliam.distributions.circular.WrappedGaussian;
-import org.mckilliam.distributions.circular.WrappedUniform;
 
 /**
  *
- * @author mckillrg
+ * @author Robby McKilliam
  */
 public class InverseCDFStationaryProcessTest {
     

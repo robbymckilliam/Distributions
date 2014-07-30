@@ -44,7 +44,7 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }).trapezoid(ir, ir, 400);
+                    }).trapezoid(-ir, ir, 200);
  
         //compute all the convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
@@ -73,7 +73,7 @@ public class InverseCDFStationaryProcess implements StationaryProcess {
                             double FGx = y.icdf(g.cdf(x)) ;
                             return FGx*FGx* X.marginal().pdf(x);
                         }
-                    }).trapezoid(ir, ir, 400);
+                    }).trapezoid(-ir, ir, 200);
  
         //compute all teh convariance terms
         double[] min = {-ir,-ir}; double[] max = {ir,ir};
