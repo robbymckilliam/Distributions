@@ -1,5 +1,3 @@
-
-
 /*
  * GaussianNoise.java
  *
